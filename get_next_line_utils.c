@@ -36,22 +36,45 @@ char	*ft_strjoin(char *s1, char *s2)
 
 char	*ft_strchr(const char *s, int c)
 {
-	int	len;
-	char	*str;
+	int	i;
 
-	len = ft_strlen(s);
-	str = (char *)s;
-	while (len >= 0)
+	i = 0;
+	while (s[i] != '\0')
 	{
-		if (str[len] == (char)c)
-		{
-			return (&str[len]);
-		}
-		len--;
+		if (s[i] == (char)c)
+			return ((char *)s + i);
+		i++;
 	}
+	if ((char)c == '\0' && s[i] == '\0')
+		return ((char *)&s[i]);
 	return (NULL);
 }
 
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char	*sub;
+	size_t	i;
+	size_t	lenght_s;
+
+	sub = NULL;
+	i = 0;
+	lenght_s = ft_strlen(s);
+	if (start + len < lenght_s)
+		sub = malloc(sizeof(char) * (len + 1));
+	else if (start > lenght_s)
+		return (NULL);
+	else
+		sub = malloc(sizeof(char) * (lenght_s - start + 1));
+	if (!sub)
+		return (NULL);
+	while (s[start + i] != '\0' && start < lenght_s && i < len)
+	{
+		sub[i] = s[start + i];
+		i++;
+	}
+	sub[i] = '\0';
+	return (sub);
+}
 
 int	main(void)
 {
