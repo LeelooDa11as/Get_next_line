@@ -15,11 +15,15 @@
 
 # include <stdio.h>
 # include <unistd.h>
-# include <stdlib.h>
+# include <stdlib.h> 
 
 //TESTING THE CONCEPTS
 void	exampleFunction(void);
 
 //ACTUAL FUNCTION
 //char *get_next_line(int fd);
+size_t	ft_strlen(char *str);
+//char	*ft_strdup(const char *s);
+char	*ft_strjoin(char *s1, char *s2);
+char	*ft_strrchr(const char *s, int c);
 #endif
