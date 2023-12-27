@@ -34,9 +34,9 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (ptr);
 }
 
-char	*ft_strrchr(const char *s, int c)
+char	*ft_strchr(const char *s, int c)
 {
-	int		len;
+	int	len;
 	char	*str;
 
 	len = ft_strlen(s);
