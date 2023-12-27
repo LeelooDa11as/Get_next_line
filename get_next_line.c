@@ -17,8 +17,9 @@
 char	*get_next_line(int fd)
 {
 	char	*buff;
-	int		len_chrs;
-	int		i;
+	char	*line;
+	int	len_chrs;
+	int	i;
 
 	buff = malloc(sizeof(char) * 7);
 	if (!buff)
@@ -27,14 +28,15 @@ char	*get_next_line(int fd)
 	len_chrs = read(fd, buff, 5);
 	while (len_chrs > 0)
 	{
+		line = ft_strjoin(line, buff;
 		i = 0;
 		printf("%s\n", buff);
 		while(i < len_chrs)
 		{
+			
 			if(buff[i] == '\n')
 			{
 				buff[i] = '\0';
-				printf("tengo que parar");
 				return(buff);
 			}
 			i++;
