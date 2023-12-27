@@ -17,14 +17,14 @@ char	*ft_strjoin(char *s1, char *s2)
 	char	*ptr;
 	int		i;
 
+	if (!s1)
+		s1 = ft_strnull();
 	len_s1 = ft_strlen(s1);
 	len_s2 = ft_strlen(s2);
 	i = -1;
-	if (!s1 || !s2)
-		return(NULL);
 	ptr = (char *)malloc(sizeof(char) * ((len_s1 + len_s2 + 1)));
 	if(!ptr)
-		return(NULL);
+		return (NULL);
 	while(++i < len_s1)
 		ptr[i] = s1[i];
 	i = -1;
@@ -32,6 +32,17 @@ char	*ft_strjoin(char *s1, char *s2)
 		ptr[len_s1 + i] = s2[i];
 	ptr[len_s1 + len_s2] = '\0';
 	return (ptr);
+}
+
+char	*ft_strnull(void)
+{
+	char	*str_null;
+
+	str_null = (char *)malloc(sizeof(char) * 1));
+	if(!str_null)
+		return(NULL);
+	str_null[0] = '\0';
+	return (str_null);
 }
 
 char	*ft_strchr(const char *s, int c)
