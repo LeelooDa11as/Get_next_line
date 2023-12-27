@@ -28,19 +28,14 @@ char	*get_next_line(int fd)
 	len_chrs = read(fd, buff, 5);
 	while (len_chrs > 0)
 	{
-		line = ft_strjoin(line, buff;
+		line = ft_strjoin(line, ft_substr(buff, 0, len_chrs));
 		i = 0;
-		printf("%s\n", buff);
 		while(i < len_chrs)
 		{
 			
 			if(buff[i] == '\n')
-			{
-				buff[i] = '\0';
-				return(buff);
-			}
+				return(line);
 			i++;
-			printf("no he parado");
 		}
 		len_chrs = read(fd, buff, 5);
 	}
