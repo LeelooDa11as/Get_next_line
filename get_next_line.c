@@ -73,9 +73,7 @@ char	*get_next_line(int fd)
 	char			*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
-	{
 		return NULL;
-	}
 	storage = fill_storage(storage, fd);
 	if (storage == NULL)
 		return NULL;
