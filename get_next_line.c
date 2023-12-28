@@ -6,50 +6,95 @@
 /*   By: kkoval <kkoval@student.42barcelon>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 19:03:32 by kkoval            #+#    #+#             */
-/*   Updated: 2023/12/18 19:03:35 by kkoval           ###   ########.fr       */
+/*   Updated: 2023/12/28 21:38:23 by kkoval           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <fcntl.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
+
+#include "get_next_line.h"
+
+
+//Esta funcion coje el storage y mira donde termina el primer \n o \0 para calcular
+//cuanto mide el resto, hacer un malloc , i copiar alli, lo que devemos guardar
+char *clean_storage(char *storage)
+{
+	char *new_storage;
+
+
+	return new_storage;
+}
+
+
+//Esta funcion coje el storage y mira donde esta el primer \n o \0 para saber
+//cual sera la longitud de la linea, haremos un malloc, copiaremos la linea, y nos devolveremos 
+//ese malloc
+char *take_line(char *storage)
+{
+	char *line;
+	
+
+
+
+	return line;
+}
+
+
+//La mision de esta funcion, es ir copiando bloque de BUFFERSIZE a stroage
+//hasta que stroage tenag suficiente informacion como para poder LUEGO extraer una linea
+//o hayamos llegado al final del archivo
+char 	*fill_storage(char *storage, int fd)
+{
+	char	*buff;
+	int 	read_bytes;
+
+	buff = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buff)
+		return (NULL);
+	buff[0] = '\0';
+	read_bytes = 1;
+	while (read_bytes > 0 && !ft_strchr(buffer, '\n'))
+	{
+		read_bytes = read(fd, buff, BUFFER_SIZE);
+		if (read_bytes == -1)
+		{
+			free(buff);
+			free(storage);
+			return NULL;
+		}
+		buff[read_bytes] = '\0';
+		storage = ft_strjoin(storage, buff);	
+	}
+	free(buff);
+	return (storage);
+}
 
 char	*get_next_line(int fd)
 {
-	char	*buff;
-	char	*line;
-	int	len_chrs;
-	int	i;
+	static char 	*storage = NULL;
+	char			*line;
 
-	buff = malloc(sizeof(char) * 7);
-	if (!buff)
-		return (NULL);
-
-	len_chrs = read(fd, buff, 5);
-	while (len_chrs > 0)
+	if (fd < 0 && BUFFER_SIZE > 0)
 	{
-		line = ft_strjoin(line, ft_substr(buff, 0, len_chrs));
-		i = 0;
-		while(i < len_chrs)
-		{
-			
-			if(buff[i] == '\n')
-				return(line);
-			i++;
-		}
-		len_chrs = read(fd, buff, 5);
+		return NULL;
 	}
-	if (len_chrs == -1) 
-		return (NULL);
-	buff[len_chrs - 1] = '\0';
-	return (buff);
+	storage = fill_storage(storage, fd);
+	if (storage == NULL)
+		return NULL;
+	line = take_line(storage);
+	if (line == NULL)
+	{
+		free(storage);
+		return NULL;
+	}
+	storage = clean_storage(storage);
+	return line;
 }
-
+/*
 int	main(void)
 {
-	int		fd;
+ 	int		fd;
 
-	fd = open("borja.txt", O_RDONLY);
+ 	fd = open("text.txt", O_RDONLY);
+ 	printf("%s", get_next_line(fd));
 	printf("%s", get_next_line(fd));
 	return(1);
-}
+}*/

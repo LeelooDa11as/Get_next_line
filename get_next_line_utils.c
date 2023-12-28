@@ -2,7 +2,7 @@
 
 size_t	ft_strlen(char *str)
 {
-	size_t	len;
+	int	len;
 
 	len = 0;
 	while(str[len] != '\0')
@@ -15,30 +15,38 @@ char	*ft_strjoin(char *s1, char *s2)
 	size_t	len_s1;
 	size_t	len_s2;
 	char	*ptr;
-	int		i;
+	size_t	i;
+	size_t  j;
 
 	if (!s1)
 		s1 = ft_strnull();
 	len_s1 = ft_strlen(s1);
 	len_s2 = ft_strlen(s2);
-	i = -1;
+	i = 0;
+	j = 0;
 	ptr = (char *)malloc(sizeof(char) * ((len_s1 + len_s2 + 1)));
 	if(!ptr)
 		return (NULL);
-	while(++i < len_s1)
+	while(s1)
+	{
 		ptr[i] = s1[i];
-	i = -1;
-	while(++i < len_s2)
-		ptr[len_s1 + i] = s2[i];
-	ptr[len_s1 + len_s2] = '\0';
-	return (ptr);
+		i++;
+	}
+	while(s2)
+	{
+		ptr[i + j] = s2[j];
+		i++;
+		j++;
+	}
+	ptr[i + j] = '\0';
+	return ptr;
 }
 
 char	*ft_strnull(void)
 {
 	char	*str_null;
 
-	str_null = (char *)malloc(sizeof(char) * 1));
+	str_null = (char *)malloc(sizeof(char) * 1);
 	if(!str_null)
 		return(NULL);
 	str_null[0] = '\0';
@@ -69,7 +77,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 	sub = NULL;
 	i = 0;
-	lenght_s = ft_strlen(s);
+	lenght_s = ft_strlen((char *) s);
 	if (start + len < lenght_s)
 		sub = malloc(sizeof(char) * (len + 1));
 	else if (start > lenght_s)
@@ -86,9 +94,9 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	sub[i] = '\0';
 	return (sub);
 }
-
+/*
 int	main(void)
 {
 	printf("%s\n", ft_strjoin("hello", " how you doing?"));
 	return (0);
-}
+}*/

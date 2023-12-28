@@ -6,7 +6,7 @@
 /*   By: kkoval <kkoval@student.42barcelon>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 18:44:50 by kkoval            #+#    #+#             */
-/*   Updated: 2023/12/18 18:49:29 by kkoval           ###   ########.fr       */
+/*   Updated: 2023/12/28 21:36:44 by kkoval           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h> 
+# include <fcntl.h>
 
-//TESTING THE CONCEPTS
-void	exampleFunction(void);
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE = 10
+# endif
 
-//ACTUAL FUNCTION
-//char *get_next_line(int fd);
+char	*get_next_line(int);
 size_t	ft_strlen(char *str);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strchr(const char *s, int c);
