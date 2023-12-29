@@ -18,8 +18,15 @@
 //aqui preparamos la siguiente linea
 char *clean_storage(char *storage)
 {
-	char *new_storage;
+	char	*new_storage;
+	size_t	start;
+	size_t	len;
 
+	start = 0;
+	len = ft_strlen(storage);
+	while(storage[start] != '\n' && storage[start] != '\0')
+		start++;
+	new_storage = ft_substr(storage, (unsigned int)start, len);
 	return new_storage;
 }
 
@@ -36,13 +43,8 @@ char *take_line(char *storage)
 	size = 0;
 	while(storage[size] != '\n' && storage[size] != '\0')
 		size++;
-	line = malloc(sizeof(char) * (size + 1))
-	
-	
-
-
-
-	return line;
+	line = ft_substr(storage, 0, size);
+	return (line);
 }
 
 
@@ -54,7 +56,7 @@ char 	*fill_storage(char *storage, int fd)
 	char	*buffer;
 	int 	read_bytes;
 
-	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
 	buffer[0] = '\0';
