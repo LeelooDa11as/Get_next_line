@@ -26,7 +26,8 @@ char *clean_storage(char *storage)
 	len = ft_strlen(storage);
 	while(storage[start] != '\n' && storage[start] != '\0')
 		start++;
-	new_storage = ft_substr(storage, (unsigned int)start, len);
+	new_storage = ft_substr(storage, (unsigned int)start, len); //por que +1??
+	//new_storage = ft_strchr(storage, '\n'); ---> es equivalente o todo lo anterior???
 	return new_storage;
 }
 
