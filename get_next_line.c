@@ -38,32 +38,32 @@ char *take_line(char *storage)
 }
 
 
-//La mision de esta funcion, es ir copiando bloque de BUFFERSIZE a stroage
+//La mision de esta funcion, es ir copiando bloque de BUFFERSIZE a storage
 //hasta que stroage tenag suficiente informacion como para poder LUEGO extraer una linea
 //o hayamos llegado al final del archivo
 char 	*fill_storage(char *storage, int fd)
 {
-	char	*buff;
+	char	*buffer;
 	int 	read_bytes;
 
-	buff = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!buff)
+	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buffer)
 		return (NULL);
-	buff[0] = '\0';
+	buffer[0] = '\0';
 	read_bytes = 1;
 	while (read_bytes > 0 && !ft_strchr(buffer, '\n'))
 	{
-		read_bytes = read(fd, buff, BUFFER_SIZE);
+		read_bytes = read(fd, buffer, BUFFER_SIZE);
 		if (read_bytes == -1)
 		{
-			free(buff);
+			free(buffer);
 			free(storage);
 			return NULL;
 		}
-		buff[read_bytes] = '\0';
-		storage = ft_strjoin(storage, buff);	
+		buffer[read_bytes] = '\0';
+		storage = ft_strjoin(storage, buffer);	
 	}
-	free(buff);
+	free(buffer);
 	return (storage);
 }
 
