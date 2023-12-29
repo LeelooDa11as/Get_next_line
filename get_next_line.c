@@ -14,11 +14,11 @@
 
 
 //Esta funcion coje el storage y mira donde termina el primer \n o \0 para calcular
-//cuanto mide el resto, hacer un malloc , i copiar alli, lo que devemos guardar
+//cuanto mide el resto, hacer un malloc , i copiar alli, lo que devemos guardar. 
+//aqui preparamos la siguiente linea
 char *clean_storage(char *storage)
 {
 	char *new_storage;
-
 
 	return new_storage;
 }
@@ -27,9 +27,17 @@ char *clean_storage(char *storage)
 //Esta funcion coje el storage y mira donde esta el primer \n o \0 para saber
 //cual sera la longitud de la linea, haremos un malloc, copiaremos la linea, y nos devolveremos 
 //ese malloc
+//cogemos la linea para devolver
 char *take_line(char *storage)
 {
-	char *line;
+	char	*line;
+	size_t	size;
+
+	size = 0;
+	while(storage[size] != '\n' && storage[size] != '\0')
+		size++;
+	line = malloc(sizeof(char) * (size + 1))
+	
 	
 
 
