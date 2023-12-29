@@ -67,7 +67,10 @@ char	*fill_storage(char *storage, int fd)
 
 	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
+	{
+		free(storage);
 		return (NULL);
+	}
 	buffer[0] = '\0';
 	read_bytes = 1;
 	while (read_bytes > 0 && !ft_strchr(buffer, '\n'))
@@ -79,11 +82,8 @@ char	*fill_storage(char *storage, int fd)
 			free(storage);
 			return (NULL);
 		}
-		if(read_bytes > 0)
-		{
-			buffer[read_bytes] = '\0';
-			storage = ft_strjoin(storage, buffer);
-		}
+		buffer[read_bytes] = '\0';
+		storage = ft_strjoin(storage, buffer);
 	}
 	free(buffer);
 	return (storage);

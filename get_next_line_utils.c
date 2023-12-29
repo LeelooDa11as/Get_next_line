@@ -12,8 +12,6 @@ size_t	ft_strlen(char *str)
 
 char	*ft_strjoin(char *s1, char *s2)
 {
-	size_t	len_s1;
-	size_t	len_s2;
 	char	*ptr;
 	size_t	i;
 	size_t  j;
@@ -24,27 +22,17 @@ char	*ft_strjoin(char *s1, char *s2)
 		if(s1 == NULL)
 			return NULL;
 	}
-	len_s1 = ft_strlen(s1);
-	len_s2 = ft_strlen(s2);
 	i = 0;
 	j = 0;
-	ptr = (char *)malloc(sizeof(char) * ((len_s1 + len_s2 + 1)));
+	ptr = (char *)malloc(sizeof(char) * ((ft_strlen(s1) + ft_strlen(s2) + 1)));
 	if(!ptr)
-	{
-		free(s1);
-		return (NULL);
-	}
+		return true_free(&s1); // aqui no era necesario true_free, proque el return NULL ya se hereda en los returns
 	while(s1[i])
-	{
-		ptr[i] = s1[i];
-		i++;
-	}
+		ptr[i++] = s1[j++];
+	j = 0;
 	while(s2[j])
-	{
-		ptr[i + j] = s2[j];
-		j++;
-	}
-	ptr[i + j] = '\0';
+		ptr[i++] = s2[j++];
+	ptr[i] = '\0';
 	free(s1); //Aqui liberamos Storage (s1). porque sino a cada vuelta generamos un leak
 	return ptr;
 }
