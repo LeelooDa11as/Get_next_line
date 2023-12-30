@@ -6,7 +6,7 @@
 /*   By: kkoval <kkoval@student.42barcelon>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 19:03:32 by kkoval            #+#    #+#             */
-/*   Updated: 2023/12/29 18:59:49 by kkoval           ###   ########.fr       */
+/*   Updated: 2023/12/30 17:45:32 by kkoval           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,44 +21,40 @@ char	*clean_storage(char *storage)
 	size_t	len;
 
 	start = 0;
-	if(!storage || storage[0] == '\0')
+	if (!storage || storage[0] == '\0')
 	{
 		free(storage);
-		return NULL;
+		return (NULL);
 	}
 	len = ft_strlen(storage);
 	while (storage[start] != '\n' && storage[start] != '\0')
 		start++;
-	if(storage[start] == '\0')
+	if (storage[start] == '\0')
 	{
 		free(storage);
-		return NULL;
+		return (NULL);
 	}
-	start++; // como es un \n, avanzamos uno mas
+	start++;
 	new_storage = ft_substr(storage, (unsigned int)start, len);
 	free(storage);
 	return (new_storage);
 }
-/*Coje el storage y mira donde esta el primer \n o \0 para saber
-cual sera la longitud de la linea, haremos un malloc*/
+
 char	*take_line(char *storage)
 {
 	char	*line;
 	size_t	size;
 
 	size = 0;
-	if (storage[0] ==  '\0')
-		return NULL;
+	if (storage[0] == '\0')
+		return (NULL);
 	while (storage[size] != '\n' && storage[size] != '\0')
 		size++;
-	if(storage[size] == '\n') //importante cojer el \n o no devolvemos la linea engtera i nos quedaremos pilaldos a la sigueinte llamada
+	if (storage[size] == '\n')
 		size++;
 	line = ft_substr(storage, 0, size);
 	return (line);
 }
-/*La mision de esta funcion, es ir copiando bloque de BUFFERSIZE a storage
-hasta que stroage tenag suficiente informacion como para poder LUEGO 
-extraer una linea o hayamos llegado al final del archivo*/
 
 char	*fill_storage(char *storage, int fd)
 {
@@ -89,31 +85,13 @@ char	*fill_storage(char *storage, int fd)
 	return (storage);
 }
 
-//800 -> hola que tal como estas
-
-//(600) **ptr -> 400
-char *true_free(char **ptr)
+char	*true_free(char **ptr)
 {
 	free(*ptr);
 	*ptr = NULL;
-	return NULL;
+	return (NULL);
 }
 
-/*
-//(600) **ptr -> 800
-char *true_free(char *ptr)
-{
-	free(ptr);
-	ptr = NULL;   <--- aqui no estoy poniendo en NULL el puntero storage ortiginal
-				  <--- se lo estmoa poniendo al hermano tonto (ptr)
-	return NULL;
-}
-
-//(400) storage -> 800;
-storage = clean_storage(storage);
-*/
-
-//(400) storage -> 800;
 char	*get_next_line(int fd)
 {
 	static char	*storage = NULL;
@@ -126,33 +104,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	line = take_line(storage);
 	if (line == NULL)
-	{
-		/*
-		free(storage);
-		storage = NULL; // Esto es importante porque storage es una variable static
-		// Si libero storage, la proxima vez que llaman a GNL, storage seguiria conservando la antigua
-		// direccion de memoria que ya habiamos liberado, si intentamos trabajar sobre ells, segmentetion fault
-		// por eso lo ponemos en NULL, y asi la proxima llamada a GNL, no iremos a visitar una zona que no existe
-		return (NULL);
-		*/
-		return(true_free(&storage));
-	}
+		return (true_free(&storage));
 	storage = clean_storage(storage);
-	//aqui seria tarde liberar porque hemos perdido la direccion del "primer" storage
-	//o tambien havcer algo como
-	/*
-		if(storage == NULL)
-			free(storage);
-	*/
 	return (line);
 }
-/*
-int	main(void)
-{
- 	int		fd;
-
- 	fd = open("text.txt", O_RDONLY);
- 	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	return(1);
-}*/
